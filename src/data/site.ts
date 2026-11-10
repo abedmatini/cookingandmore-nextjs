@@ -19,7 +19,7 @@ export const companyPages: PageRecord[] = [
       "Unser erfahrenes Team aus talentierten Köchen und professionellen Eventplanern sorgt dafür, dass jedes Detail perfekt ist. Wir verwenden nur die frischesten Zutaten und kreieren Menüs, die sowohl geschmacklich als auch visuell beeindrucken. Von exquisiten Fingerfoods bis hin zu mehrgängigen Menüs – wir bieten eine Vielfalt an Optionen, die Ihre Veranstaltung unvergesslich machen.",
       "Lassen Sie sich von unserer Leidenschaft für exzellentes Essen und herausragenden Service begeistern. Mit Cooking and More wird Ihr Event zu einem kulinarischen Highlight, das Ihre Gäste noch lange in Erinnerung behalten werden.",
     ],
-    image: "/media/weihnachten.jpg",
+    image: "/media/interior-hero.jpg",
     kind: "company",
   },
   {
@@ -33,7 +33,7 @@ export const companyPages: PageRecord[] = [
       "Hochwertige Zutaten: Wir verwenden nur die besten und frischesten Zutaten. Unser Engagement für Qualität stellt sicher, dass Ihr Event zu einem kulinarischen Erfolg wird.",
       "Professioneller Service: Unser Team kümmert sich um jedes Detail mit Präzision und Sorgfalt, sodass Sie sich entspannen und Ihr Event in vollen Zügen genießen können.",
     ],
-    image: "/media/hochzeit.jpeg",
+    image: "/media/interior-hero.jpg",
     kind: "company",
   },
   {
@@ -45,7 +45,7 @@ export const companyPages: PageRecord[] = [
       "Erleben Sie erstklassiges Catering und unvergessliche Events mit Cooking and More. Wir bieten Ihnen nicht nur kulinarische Meisterwerke, sondern auch die perfekte Location für Ihre Veranstaltungen.",
       "Egal, ob Hochzeit, Firmenfeier oder privater Anlass – wir haben die passende Umgebung für jeden Anlass. Unsere exklusiven Locations bieten Ihnen vielseitige Möglichkeiten, Ihre Feier ganz nach Ihren Wünschen zu gestalten.",
     ],
-    image: "/media/alte-giesserei.jpg",
+    image: "/media/interior-hero.jpg",
     kind: "company",
   },
   {
@@ -60,6 +60,20 @@ export const companyPages: PageRecord[] = [
       "Nachhaltigkeit bedeutet für uns auch faire Arbeitsbedingungen, Aus- und Weiterbildung sowie eine offene, wertschätzende Unternehmenskultur. Für uns ist Nachhaltigkeit ein Prozess. Wir arbeiten stetig daran, besser zu werden.",
     ],
     image: "/media/dock2.jpg",
+    kind: "company",
+  },
+  {
+    path: "/about-us/",
+    title: "Über uns",
+    eyebrow: "Cooking and More",
+    description: "Catering mit Leidenschaft, Qualität und kreativen Ideen",
+    body: [
+      "Bei Cooking and More stehen Qualität, Kreativität und die persönliche Betreuung unserer Kunden im Mittelpunkt. Wir entwickeln individuelle kulinarische Konzepte, die zu Ihrem Anlass, Ihren Gästen und Ihrer Location passen.",
+      "Unsere Mission ist es, aus jeder Veranstaltung ein besonderes Erlebnis zu machen. Unser Team verbindet professionelles Eventhandwerk mit Freude an gutem Essen und aufmerksamem Service.",
+      "Qualität und Frische prägen unsere Küche. Sorgfältig ausgewählte Zutaten, verlässliche Partner und eine präzise Planung bilden die Grundlage jedes Caterings.",
+      "Mit unseren außergewöhnlichen Locations und unserem erfahrenen Team begleiten wir Hochzeiten, private Feiern, Firmenveranstaltungen, Galas und Produktionen in Köln und Umgebung.",
+    ],
+    image: "/media/about-original.png",
     kind: "company",
   },
 ];
@@ -102,6 +116,11 @@ export const posts: PageRecord[] = [
   },
   {
     path: "/zur-gemutlichen-ekce-2/", title: "Zur gemütlichen Ecke", description: "Intime und behagliche Atmosphäre",
+    body: ["Für eine intime und behagliche Atmosphäre sorgt unsere Location Zur Gemütlichen Ecke. Diese charmante Kneipe im bergischen Land eignet sich perfekt für kleinere Feiern und private Anlässe.", "Genießen Sie die warme und einladende Atmosphäre, während wir Ihnen kulinarische Köstlichkeiten servieren."],
+    image: "/media/ecke.jpg", kind: "post",
+  },
+  {
+    path: "/zur-gemutlichen-ekce/", title: "Zur gemütlichen Ecke", description: "Intime und behagliche Atmosphäre",
     body: ["Für eine intime und behagliche Atmosphäre sorgt unsere Location Zur Gemütlichen Ecke. Diese charmante Kneipe im bergischen Land eignet sich perfekt für kleinere Feiern und private Anlässe.", "Genießen Sie die warme und einladende Atmosphäre, während wir Ihnen kulinarische Köstlichkeiten servieren."],
     image: "/media/ecke.jpg", kind: "post",
   },

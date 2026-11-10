@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 function ContactPage() {
   return (
     <>
-      <Hero title="Kontakt" description="Lassen Sie uns über Ihr Event sprechen." image="/media/hafen12.jpg" />
+      <Hero title="Kontakt" description="Wir freuen uns auf deine Nachricht." image="/media/contact-original.jpg" />
       <section className="section contact-layout">
         <div><span className="kicker gold">Kontaktiere uns</span><h2>Wir freuen uns auf Ihre Anfrage.</h2><p>Erzählen Sie uns von Ihrem Anlass. Gemeinsam entwickeln wir ein Catering-Konzept, das zu Ihnen und Ihren Gästen passt.</p>
           <div className="contact-details"><div><small>Adresse</small><p>Hafenstraße 7<br />51063 Köln Mülheim</p></div><div><small>Kontakt</small><p><a href="tel:+4922175944444">0221 – 7594 4444</a><br /><a href="mailto:welcome@cookingandmore.de">welcome@cookingandmore.de</a></p></div></div>
@@ -68,7 +68,7 @@ function LegalPage({ privacy = false }: { privacy?: boolean }) {
 }
 
 function Hero({ title, description, image }: { title: string; description?: string; image?: string }) {
-  return <section className="page-hero">{image && <Image src={image} alt="" fill priority sizes="100vw" />}<div className="hero-shade" /><div><span className="kicker">Cooking and More</span><h1>{title}</h1>{description && <p>{description}</p>}</div></section>;
+  return <section className="page-hero">{image && <Image src={image} alt="" fill priority sizes="100vw" />}<div className="hero-shade" /><div><span className="hero-script">Cooking and More</span><h1>{title}</h1>{description && <p>{description}</p>}</div></section>;
 }
 
 export default async function ContentPage({ params }: Props) {

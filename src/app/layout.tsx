@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Kristi, Lato } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
-const sans = Montserrat({
+const sans = Lato({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "700", "900"],
 });
 
-const display = Cormorant_Garamond({
-  variable: "--font-display",
+const script = Kristi({
+  variable: "--font-script",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${sans.variable} ${display.variable}`}>
+    <html lang="de" className={`${sans.variable} ${script.variable}`}>
       <body><SiteHeader />{children}<SiteFooter /></body>
     </html>
   );

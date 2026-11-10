@@ -32,6 +32,7 @@ Every original URL keeps the same path and trailing slash. `[x]` means the route
 - [x] `/hochzeitscaterig/` → `/hochzeitscaterig/`
 - [x] `/hafen12/` → `/hafen12/`
 - [x] `/zur-gemutlichen-ekce-2/` → `/zur-gemutlichen-ekce-2/`
+- [x] `/zur-gemutlichen-ekce/` → `/zur-gemutlichen-ekce/` (desktop navigation discovery)
 - [x] `/feiern-sie-ihre-weihnachtsfeier-mit-dem-business-catering-von-cooking-and-more/` → same
 - [x] `/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/` → same
 - [x] `/verleihen-sie-ihrem-gala-event-glanz-mit-dem-business-catering-von-cooking-and-more/` → same
