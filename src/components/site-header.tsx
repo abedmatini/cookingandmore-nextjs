@@ -38,7 +38,7 @@ export function SiteHeader() {
           <span /><span /><span />
         </button>
         <nav className={open ? "nav open" : "nav"} aria-label="Hauptnavigation">
-          <Link href="/" onClick={() => setOpen(false)}>Home</Link>
+          <Link className="mobile-only" href="/" onClick={() => setOpen(false)}>Home</Link>
           <Link href="/about-us/" onClick={() => setOpen(false)}>Über uns</Link>
           <div className="nav-group">
             <button type="button">Entdecke unser Catering</button>
