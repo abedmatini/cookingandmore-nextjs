@@ -21,11 +21,14 @@ Node.js 20 or newer is recommended. Deploy to Vercel or any Node-compatible host
 ## Content and routes
 
 - Typed page, post, archive, navigation, and location records: `src/data/site.ts`
+- Verbatim imported main content for 78 rendered URLs: `src/data/source-content.json`
 - Local first-party images: `public/media/`
+- Imported page media (443 source references): `public/media/imported/`
 - Shared visual shell: `src/components/`
 - Static catch-all route and metadata: `src/app/[...slug]/page.tsx`
 - Generated SEO endpoints: `/sitemap.xml` and `/robots.txt`
 - [Complete page-by-page migration checklist](docs/page-checklist.md)
+- [Machine-readable content/image/link audit](docs/content-audit.json)
 
 Every inventory URL is statically generated at the original path. `trailingSlash: true` preserves the WordPress URL convention.
 
@@ -58,6 +61,17 @@ They remain routable so no indexed or bookmarked URL is lost. If removed later, 
 ```bash
 npm run lint
 npm run build
+npm run audit:content # while the dev server is running on port 43721
 ```
 
 Comparison screenshots produced during migration are stored as run artifacts rather than committed application assets.
+
+## Refreshing content from rendered WordPress HTML
+
+Extract the supplied archive, then run:
+
+```bash
+node scripts/import-rendered-html.mjs /path/to/extracted/html
+```
+
+The importer sanitizes the main-content wrapper, preserves text and links, decodes protected email addresses, downloads referenced media locally, and regenerates both content audit files.

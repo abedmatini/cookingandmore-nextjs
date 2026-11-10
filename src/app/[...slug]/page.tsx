@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContactForm } from "@/components/contact-form";
+import { SourceContent } from "@/components/source-content";
 import { allPages, getPage, locations, posts } from "@/data/site";
+import { getSourcePage } from "@/data/source";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -14,14 +16,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const path = `/${slug.join("/")}/`;
+  const source = getSourcePage(path);
   const page = getPage(path);
-  if (!page) return {};
-  const description = page.description ?? "Cooking and More – Catering, Events und Locations in Köln.";
+  if (!page && !source) return {};
+  const title = source?.title ?? page!.title;
+  const description = source?.description ?? page?.description ?? "Cooking and More – Catering, Events und Locations in Köln.";
   return {
-    title: `${page.title} - Cooking And More`,
+    title: `${title} - Cooking And More`,
     description,
     alternates: { canonical: `https://cookingandmore.de${path}` },
-    openGraph: { title: `${page.title} - Cooking And More`, description, type: page.kind === "post" ? "article" : "website", images: page.image ? [page.image] : ["/media/hochzeit.jpeg"] },
+    openGraph: { title: `${title} - Cooking And More`, description, type: page?.kind === "post" ? "article" : "website", images: page?.image ? [page.image] : ["/media/hochzeit.jpeg"] },
   };
 }
 
@@ -74,6 +78,8 @@ function Hero({ title, description, image }: { title: string; description?: stri
 export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const path = `/${slug.join("/")}/`;
+  const source = getSourcePage(path);
+  if (source) return <SourceContent page={source} />;
   if (path === "/kontakt/") return <ContactPage />;
   if (path === "/impressum/") return <LegalPage />;
   if (path === "/datenschutzerklarung/") return <LegalPage privacy />;
