@@ -35,6 +35,11 @@
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-icon{width:54px;height:54px;border:1px solid #fff9;border-radius:50%;display:grid;place-items:center}
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-icon svg{display:block;width:16px;height:16px;fill:#fff}
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-shape{display:none}
+.source-page[data-route="/"] .source-content .elementor-widget-button{text-align:center}
+.source-page[data-route="/"] .source-content .elementor-widget-button .elementor-button{min-width:160px;min-height:56px;padding:16px 30px;font-size:.82rem;letter-spacing:.08em;text-align:center}
+.source-page[data-route="/"] .source-content .wpcf7-form{width:100%;max-width:none}
+.source-page[data-route="/"] .source-content .wpcf7-form p,.source-page[data-route="/"] .source-content .wpcf7-form label,.source-page[data-route="/"] .source-content .wpcf7-form .wpcf7-form-control-wrap{display:block;width:100%}
+.source-page[data-route="/"] .source-content .wpcf7-form input:not([type="hidden"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),.source-page[data-route="/"] .source-content .wpcf7-form select,.source-page[data-route="/"] .source-content .wpcf7-form textarea{display:block;width:100%;max-width:none}
 .source-page[data-route="/"] .source-content .elementor-widget-owl-carousel-elementor,.source-page[data-route="/"] .source-content .owce-carousel-container{width:100%;min-width:0}
 .source-page[data-route="/"] .source-content .owce-carousel{display:flex;align-items:center;gap:clamp(28px,4vw,60px);overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;scrollbar-width:thin;scrollbar-color:var(--gold) #eee;padding:24px 4px}
 .source-page[data-route="/"] .source-content .owce-carousel>.item{display:flex;flex:0 0 clamp(150px,18vw,220px);align-items:center;justify-content:center;scroll-snap-align:start}
