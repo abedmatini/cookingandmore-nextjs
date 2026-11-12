@@ -13,10 +13,6 @@ export async function POST(request: Request) {
 
   // Email provider integration point: pass the validated payload to Resend,
   // Postmark, Nodemailer, or the owner's preferred transactional email service.
-  console.info("Contact form accepted", {
-    name: body.name,
-    email: body.email,
-    eventType: body.eventType,
-  });
+  console.info("Contact form accepted");
   return NextResponse.json({ ok: true });
 }
