@@ -18,7 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const path = `/${slug.join("/")}/`;
   const source = getSourcePage(path);
   const page = getPage(path);
-  if (!page && !source) return {};
+  if (!page && !source) {
+    return {
+      title: "Seite nicht gefunden",
+      robots: { index: false, follow: false },
+    };
+  }
   const title = source?.title ?? page!.title;
   const description = source?.description ?? page?.description ?? "Cooking and More – Catering, Events und Locations in Köln.";
   return {
