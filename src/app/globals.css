@@ -790,11 +790,11 @@ p{
   padding:10px;
   background:#fff
 }
-.source-page .source-content .wpcf7-form label.consent{
+.source-page[data-route="/"] .source-content .wpcf7-form label.consent{
   display:flex;
   align-items:flex-start;
-  gap:10px;
-  width:auto;
+  gap:16px;
+  width:100%;
   margin:8px 0 18px;
   font-size:.95rem;
   font-weight:400;
@@ -1192,10 +1192,18 @@ p{
   text-align:center
 }
 .source-page[data-route="/"] .source-content [data-id="8341814"] .elementor-button,
-.source-page[data-route="/"] .source-content [data-id="21b2005"] .elementor-button{
+.source-page[data-route="/"] .source-content [data-id="21b2005"] .elementor-button,
+.source-page[data-route="/"] .source-content [data-id="8bd4c98"] .elementor-button{
   display:block;
   width:100%;
   box-sizing:border-box
+}
+.source-page[data-route="/"] .source-content .wpcf7-form input[type="submit"]{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  min-height:56px;
+  padding:16px 30px
 }
 .source-page[data-route="/"] .source-content .wpcf7-form{
   width:100%;
@@ -1289,6 +1297,9 @@ p{
   min-height:560px;
   object-fit:cover;
   object-position:center 18%
+}
+.source-page[data-route="/"] .source-content [data-id="8589bf1"]{
+  display:none
 }
 @media(prefers-reduced-motion:reduce){
   .source-page[data-route="/"] .source-content .owce-carousel{
