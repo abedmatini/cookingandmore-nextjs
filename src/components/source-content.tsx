@@ -22,7 +22,43 @@ function readImage(anchor: HTMLAnchorElement): ViewerImage | null {
   return { src, alt };
 }
 
-export function SourceContent({ page }: { page: SourcePage }) {
+type TurnstileApi = { render: (element: HTMLElement, options: { sitekey: string }) => void };
+
+function mountTurnstile(form: HTMLFormElement, siteKey: string) {
+  if (form.querySelector(".cf-turnstile")) return;
+  const slot = document.createElement("div");
+  slot.className = "cf-turnstile";
+  const submit = form.querySelector<HTMLElement>('[type="submit"]');
+  if (submit?.parentElement) submit.parentElement.before(slot);
+  else form.append(slot);
+  if (!siteKey) {
+    slot.textContent = "Die Sicherheitsprüfung ist noch nicht eingerichtet.";
+    return;
+  }
+  const render = () => {
+    const turnstile = (window as Window & { turnstile?: TurnstileApi }).turnstile;
+    if (!turnstile) return false;
+    turnstile.render(slot, { sitekey: siteKey });
+    return true;
+  };
+  if (render()) return;
+  let script = document.querySelector<HTMLScriptElement>('script[data-turnstile="1"]');
+  if (!script) {
+    script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+    script.async = true;
+    script.dataset.turnstile = "1";
+    document.head.append(script);
+  }
+  const widgetScript = script;
+  widgetScript.addEventListener("load", () => {
+    widgetScript.dataset.loaded = "1";
+    render();
+  }, { once: true });
+  if (widgetScript.dataset.loaded === "1") render();
+}
+
+export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePage; turnstileSiteKey?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [viewer, setViewer] = useState<ViewerState | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -52,24 +88,26 @@ export function SourceContent({ page }: { page: SourcePage }) {
       }
     }
     for (const form of root.querySelectorAll<HTMLFormElement>(".wpcf7-form")) {
-      if (form.querySelector('input[name="consent"]')) continue;
-      const label = document.createElement("label");
-      label.className = "consent";
-      const input = document.createElement("input");
-      input.type = "checkbox";
-      input.name = "consent";
-      input.value = "on";
-      input.required = true;
-      const text = document.createElement("span");
-      text.append("Ich habe die ");
-      const link = document.createElement("a");
-      link.href = "/datenschutzerklarung/";
-      link.textContent = "Datenschutzerklärung";
-      text.append(link, " gelesen und stimme der Verarbeitung meiner Angaben zu.");
-      label.append(input, text);
-      const submit = form.querySelector<HTMLElement>('[type="submit"]');
-      if (submit?.parentElement) submit.parentElement.before(label);
-      else form.append(label);
+      if (!form.querySelector('input[name="consent"]')) {
+        const label = document.createElement("label");
+        label.className = "consent";
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.name = "consent";
+        input.value = "on";
+        input.required = true;
+        const text = document.createElement("span");
+        text.append("Ich habe die ");
+        const link = document.createElement("a");
+        link.href = "/datenschutzerklarung/";
+        link.textContent = "Datenschutzerklärung";
+        text.append(link, " gelesen und stimme der Verarbeitung meiner Angaben zu.");
+        label.append(input, text);
+        const submit = form.querySelector<HTMLElement>('[type="submit"]');
+        if (submit?.parentElement) submit.parentElement.before(label);
+        else form.append(label);
+      }
+      mountTurnstile(form, turnstileSiteKey);
     }
     const draft = formDraft.current;
     const form = root.querySelector<HTMLFormElement>(".wpcf7-form");
@@ -85,7 +123,7 @@ export function SourceContent({ page }: { page: SourcePage }) {
     }
     const box = form.querySelector<HTMLInputElement>('input[name="consent"]');
     if (box) box.checked = draft.consent;
-  }, [page.html, status, viewer]);
+  }, [page.html, page.route, status, viewer, turnstileSiteKey]);
 
   useEffect(() => {
     const root = contentRef.current;
@@ -187,7 +225,8 @@ export function SourceContent({ page }: { page: SourcePage }) {
       fields: Object.fromEntries([...values.entries()].filter((entry): entry is [string, string] => typeof entry[1] === "string" && entry[0] !== "consent")),
       consent: consentGiven,
     };
-    if (!consentGiven) {
+    const turnstileToken = String(values.get("cf-turnstile-response") ?? "");
+    if (!consentGiven || !turnstileToken) {
       setStatus("error");
       return;
     }
@@ -198,6 +237,7 @@ export function SourceContent({ page }: { page: SourcePage }) {
       eventType: String(values.get("BusinessorPrivat") ?? values.get("eventType") ?? ""),
       message: String(values.get("your-message") ?? values.get("message") ?? ""),
       consent: "on" as const,
+      turnstileToken,
     };
     setStatus("sending");
     const response = await fetch("/api/contact", {

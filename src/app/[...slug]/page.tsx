@@ -7,6 +7,7 @@ import { SourceContent } from "@/components/source-content";
 import { allPages, getPage, locations, posts } from "@/data/site";
 import { getSourcePage } from "@/data/source";
 import { repairContentHtml } from "@/lib/repair-content-links";
+import { readTurnstileSiteKey } from "@/lib/turnstile";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -43,7 +44,7 @@ function ContactPage() {
         <div><span className="kicker gold">Kontaktiere uns</span><h2>Wir freuen uns auf Ihre Anfrage.</h2><p>Erzählen Sie uns von Ihrem Anlass. Gemeinsam entwickeln wir ein Catering-Konzept, das zu Ihnen und Ihren Gästen passt.</p>
           <div className="contact-details"><div><small>Adresse</small><p>Hafenstraße 7<br />51063 Köln Mülheim</p></div><div><small>Kontakt</small><p><a href="tel:+4922175944444">0221 – 7594 4444</a><br /><a href="mailto:welcome@cookingandmore.de">welcome@cookingandmore.de</a></p></div></div>
         </div>
-        <ContactForm />
+        <ContactForm turnstileSiteKey={readTurnstileSiteKey()} />
       </section>
     </>
   );
@@ -85,7 +86,7 @@ export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const path = `/${slug.join("/")}/`;
   const source = getSourcePage(path);
-  if (source) return <SourceContent page={{ ...source, html: repairContentHtml(source.html) }} />;
+  if (source) return <SourceContent page={{ ...source, html: repairContentHtml(source.html) }} turnstileSiteKey={readTurnstileSiteKey()} />;
   if (path === "/kontakt/") return <ContactPage />;
   if (path === "/impressum/") return <LegalPage />;
   if (path === "/datenschutzerklarung/") return <LegalPage privacy />;

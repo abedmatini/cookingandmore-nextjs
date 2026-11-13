@@ -802,6 +802,9 @@ p{
   text-transform:none;
   letter-spacing:0
 }
+.source-content .cf-turnstile,.contact-form .cf-turnstile{
+  margin:8px 0 16px
+}
 .source-page .source-content .wpcf7-form label.consent input{
   width:18px;
   height:18px;
