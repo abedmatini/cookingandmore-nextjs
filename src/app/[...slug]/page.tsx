@@ -6,6 +6,7 @@ import { ContactForm } from "@/components/contact-form";
 import { SourceContent } from "@/components/source-content";
 import { allPages, getPage, locations, posts } from "@/data/site";
 import { getSourcePage } from "@/data/source";
+import { repairContentHtml } from "@/lib/repair-content-links";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -84,7 +85,7 @@ export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const path = `/${slug.join("/")}/`;
   const source = getSourcePage(path);
-  if (source) return <SourceContent page={source} />;
+  if (source) return <SourceContent page={{ ...source, html: repairContentHtml(source.html) }} />;
   if (path === "/kontakt/") return <ContactPage />;
   if (path === "/impressum/") return <LegalPage />;
   if (path === "/datenschutzerklarung/") return <LegalPage privacy />;
