@@ -1325,8 +1325,17 @@ p{
 .source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space .post-wrapper{
   position:relative;
   z-index:1;
-  width:100%;
-  padding:18px 20px
+  width:100%
+}
+.source-page[data-route="/business/"] .source-content .business-card-link{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  align-items:flex-end;
+  padding:18px 20px;
+  color:#fff;
+  text-decoration:none
 }
 .source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space h5{
   margin:0 0 4px;

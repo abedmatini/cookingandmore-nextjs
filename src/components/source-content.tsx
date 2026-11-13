@@ -33,6 +33,24 @@ export function SourceContent({ page }: { page: SourcePage }) {
   useLayoutEffect(() => {
     const root = contentRef.current;
     if (!root) return;
+    if (page.route === "/business/") {
+      for (const card of root.querySelectorAll<HTMLElement>(".blog-posts-grid_no_space")) {
+        if (card.querySelector(":scope > a.business-card-link")) continue;
+        const titleLink = card.querySelector<HTMLAnchorElement>(".post-header-title a");
+        const href = titleLink?.getAttribute("href");
+        if (!href) continue;
+        const anchor = document.createElement("a");
+        anchor.className = "business-card-link";
+        anchor.href = href;
+        while (card.firstChild) anchor.appendChild(card.firstChild);
+        card.appendChild(anchor);
+        for (const inner of anchor.querySelectorAll("a")) {
+          const span = document.createElement("span");
+          span.textContent = inner.textContent;
+          inner.replaceWith(span);
+        }
+      }
+    }
     for (const form of root.querySelectorAll<HTMLFormElement>(".wpcf7-form")) {
       if (form.querySelector('input[name="consent"]')) continue;
       const label = document.createElement("label");
