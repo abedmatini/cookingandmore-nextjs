@@ -48,6 +48,13 @@
 .source-page[data-route="/"] .source-content .owce-carousel>.item{display:flex;flex:0 0 clamp(150px,18vw,220px);align-items:center;justify-content:center;margin-right:clamp(28px,4vw,60px)}
 .source-page[data-route="/"] .source-content .owce-carousel>.item img{display:block;width:100%;max-width:180px;height:110px;object-fit:contain}
 @keyframes logo-row-drift{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.source-page[data-route="/"] .source-content [data-id="835a62b"] .elementor-col-66 .elementor-widget-wrap,.source-page[data-route="/"] .source-content [data-id="835a62b"] .elementor-col-66 .elementor-widget-grandrestaurant-gallery-justified,.source-page[data-route="/"] .source-content [data-id="835a62b"] .elementor-col-66 .elementor-widget-container,.source-page[data-route="/"] .source-content [data-id="835a62b"] .grandrestaurant-gallery-grid-content-wrapper,.source-page[data-route="/"] .source-content [data-id="cf99878"] .elementor-col-66 .elementor-widget-wrap,.source-page[data-route="/"] .source-content [data-id="cf99878"] .elementor-col-66 .elementor-widget-grandrestaurant-gallery-justified,.source-page[data-route="/"] .source-content [data-id="cf99878"] .elementor-col-66 .elementor-widget-container,.source-page[data-route="/"] .source-content [data-id="cf99878"] .grandrestaurant-gallery-grid-content-wrapper{height:100%}
+.source-page[data-route="/"] .source-content [data-id="835a62b"] .elementor-widget-grandrestaurant-gallery-justified,.source-page[data-route="/"] .source-content [data-id="cf99878"] .elementor-widget-grandrestaurant-gallery-justified{margin-bottom:0}
+.source-page[data-route="/"] .source-content [data-id="835a62b"] .grandrestaurant-gallery-grid-content-wrapper{grid-template-columns:1fr 1fr}
+.source-page[data-route="/"] .source-content [data-id="cf99878"] .grandrestaurant-gallery-grid-content-wrapper{grid-template-columns:1fr}
+.source-page[data-route="/"] .source-content [data-id="835a62b"] .gallery-grid-item,.source-page[data-route="/"] .source-content [data-id="835a62b"] .gallery-grid-item>a,.source-page[data-route="/"] .source-content [data-id="cf99878"] .gallery-grid-item,.source-page[data-route="/"] .source-content [data-id="cf99878"] .gallery-grid-item>a{display:block;height:100%}
+.source-page[data-route="/"] .source-content [data-id="835a62b"] .gallery-grid-item img{width:100%;height:100%;min-height:620px;object-fit:cover}
+.source-page[data-route="/"] .source-content [data-id="cf99878"] .gallery-grid-item img{width:100%;height:100%;min-height:560px;object-fit:cover;object-position:center 18%}
 @media(prefers-reduced-motion:reduce){
   .source-page[data-route="/"] .source-content .owce-carousel{animation:none}
 }
@@ -71,6 +78,9 @@
   .source-page[data-route="/"] .source-content .elementor>section:first-child h1{font-size:clamp(2.8rem,14vw,4rem)}
   .source-page[data-route="/"] .source-content .elementor>section:first-child h2{font-size:clamp(1rem,5vw,1.35rem)}
   .source-page[data-route="/"] .source-content .owce-carousel>.item{flex-basis:150px}
+  .source-page[data-route="/"] .source-content [data-id="835a62b"] .gallery-grid-item img{min-height:280px;height:280px}
+  .source-page[data-route="/"] .source-content [data-id="cf99878"] .grandrestaurant-gallery-grid-content-wrapper{grid-template-columns:1fr}
+  .source-page[data-route="/"] .source-content [data-id="cf99878"] .gallery-grid-item img{min-height:420px;height:420px}
   .source-page[data-route="/"] .source-content .owce-carousel>.item img{height:90px}
   .image-lightbox{padding:64px 16px}
   .image-lightbox img{max-width:calc(100vw - 28px);max-height:calc(100svh - 140px)}
