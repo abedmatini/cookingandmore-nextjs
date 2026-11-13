@@ -1,4 +1,4 @@
-import sourceContent from "./source-content.json";
+import { sourcePages } from "./pages-index";
 
 export type SourcePage = {
   route: string;
@@ -9,7 +9,7 @@ export type SourcePage = {
   sourceFile: string;
 };
 
-const pages = sourceContent as SourcePage[];
+const pages = sourcePages as SourcePage[];
 const byRoute = new Map(pages.map(page => [page.route, page]));
 
 export function getSourcePage(route: string) {

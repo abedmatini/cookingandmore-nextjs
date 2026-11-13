@@ -14,7 +14,7 @@ export function readTurnstileSecretKey() {
   return readEnv("TURNSTILE_SECRET_KEY");
 }
 
-export async function verifyTurnstileToken(token: string, remoteIp: string) {
+export async function verifyTurnstileToken(token: string, remoteIp = "") {
   const secret = readTurnstileSecretKey();
   if (!secret || !token) return false;
   try {

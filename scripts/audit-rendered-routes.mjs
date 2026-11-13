@@ -1,5 +1,10 @@
+import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 import * as cheerio from "cheerio";
-import pages from "../src/data/source-content.json" with { type: "json" };
+
+const directory = join(new URL("../src/data/pages/", import.meta.url).pathname);
+const files = (await readdir(directory)).filter(file => file.endsWith(".json"));
+const pages = await Promise.all(files.map(async file => JSON.parse(await readFile(join(directory, file), "utf8"))));
 
 const baseUrl = process.argv[2] ?? "http://127.0.0.1:43721";
 const normalize = value => value.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();

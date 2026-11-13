@@ -3,24 +3,15 @@ import { readTurnstileSecretKey, verifyTurnstileToken } from "@/lib/turnstile";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_BODY_BYTES = 8_000;
-const recentRequests = new Map<string, number[]>();
+const WINDOW_MS = 60_000;
+const MAX_REQUESTS = 30;
+const recentRequests: number[] = [];
 
-function clientIp(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || "unknown";
-}
-
-function isRateLimited(ip: string) {
+function isRateLimited() {
   const now = Date.now();
-  const recent = (recentRequests.get(ip) ?? []).filter(time => now - time < 60_000);
-  recent.push(now);
-  recentRequests.set(ip, recent);
-  if (recentRequests.size > 2_000) {
-    for (const [key, times] of recentRequests) {
-      if (times.every(time => now - time >= 60_000)) recentRequests.delete(key);
-    }
-  }
-  return recent.length > 8;
+  while (recentRequests.length > 0 && now - recentRequests[0] >= WINDOW_MS) recentRequests.shift();
+  recentRequests.push(now);
+  return recentRequests.length > MAX_REQUESTS;
 }
 
 async function readLimitedBody(request: Request) {
@@ -50,7 +41,7 @@ async function readLimitedBody(request: Request) {
 }
 
 export async function POST(request: Request) {
-  if (isRateLimited(clientIp(request))) {
+  if (isRateLimited()) {
     return NextResponse.json({ ok: false, error: "Zu viele Anfragen" }, { status: 429 });
   }
 
@@ -73,7 +64,7 @@ export async function POST(request: Request) {
   if (!readTurnstileSecretKey()) {
     return NextResponse.json({ ok: false, error: "Sicherheitsprüfung nicht verfügbar" }, { status: 503 });
   }
-  const accepted = await verifyTurnstileToken(token, clientIp(request));
+  const accepted = await verifyTurnstileToken(token);
   if (!accepted) {
     return NextResponse.json({ ok: false, error: "Sicherheitsprüfung fehlgeschlagen" }, { status: 403 });
   }

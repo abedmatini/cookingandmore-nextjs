@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as cheerio from "cheerio";
+import { sanitizeImportedHtml } from "@/lib/sanitize-html";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const IMAGE_FILE = /\.(jpe?g|png|gif|webp|avif|svg)$/i;
@@ -52,7 +53,10 @@ export function createLinkRepairStats(): LinkRepairStats {
 
 function routes() {
   if (routeSet) return routeSet;
-  const pages = JSON.parse(fs.readFileSync(path.join(process.cwd(), "src/data/source-content.json"), "utf8")) as { route: string }[];
+  const directory = path.join(process.cwd(), "src/data/pages");
+  const pages = fs.readdirSync(directory).filter(file => file.endsWith(".json")).map(file => {
+    return JSON.parse(fs.readFileSync(path.join(directory, file), "utf8")) as { route: string };
+  });
   routeSet = new Set(pages.map(page => page.route));
   return routeSet;
 }
@@ -149,7 +153,7 @@ export function repairContentHtml(html: string, stats?: LinkRepairStats) {
     const cached = cache.get(html);
     if (cached) return cached;
   }
-  const $ = cheerio.load(html, null, false);
+  const $ = cheerio.load(sanitizeImportedHtml(html), null, false);
   $("a[href]").each((_, element) => {
     const anchor = $(element);
     const href = anchor.attr("href")?.trim() ?? "";
