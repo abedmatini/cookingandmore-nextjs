@@ -259,8 +259,8 @@ export function repairContentHtml(html: string, stats?: LinkRepairStats) {
     const match = settings.match(/youtube\.com\\?\/watch\?v=([A-Za-z0-9_-]{11})/);
     const videoId = match?.[1];
     if (!videoId) return;
-    const src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&start=5&rel=0&playsinline=1&modestbranding=1`;
-    slot.html(`<iframe title="Cooking and More Film" src="${src}" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1"></iframe>`);
+    slot.attr("data-youtube-id", videoId);
+    slot.empty();
   });
   const repaired = $.html();
   if (!stats) cache.set(html, repaired);

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CookieSettingsButton } from "@/components/cookie-banner";
 
 export function SiteFooter() {
   return (
@@ -19,6 +20,7 @@ export function SiteFooter() {
           <Link href="/locations/">Unsere Locations</Link>
           <Link href="/impressum/">Impressum</Link>
           <Link href="/datenschutzerklarung/">Datenschutzerklärung</Link>
+          <CookieSettingsButton />
         </div>
         <div>
           <h3>Kontakt</h3>
