@@ -790,6 +790,25 @@ p{
   padding:10px;
   background:#fff
 }
+.source-page .source-content .wpcf7-form label.consent{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  width:auto;
+  margin:8px 0 18px;
+  font-size:.95rem;
+  font-weight:400;
+  line-height:1.45;
+  text-transform:none;
+  letter-spacing:0
+}
+.source-page .source-content .wpcf7-form label.consent input{
+  width:18px;
+  height:18px;
+  flex:none;
+  margin-top:3px;
+  padding:0
+}
 .source-content .hidden-fields-container,.source-content .screen-reader-response{
   display:none
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, MouseEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { SourcePage } from "@/data/source";
 
 type ViewerImage = { src: string; alt: string };
@@ -28,6 +28,46 @@ export function SourceContent({ page }: { page: SourcePage }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const formDraft = useRef<{ fields: Record<string, string>; consent: boolean } | null>(null);
+
+  useLayoutEffect(() => {
+    const root = contentRef.current;
+    if (!root) return;
+    for (const form of root.querySelectorAll<HTMLFormElement>(".wpcf7-form")) {
+      if (form.querySelector('input[name="consent"]')) continue;
+      const label = document.createElement("label");
+      label.className = "consent";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = "consent";
+      input.value = "on";
+      input.required = true;
+      const text = document.createElement("span");
+      text.append("Ich habe die ");
+      const link = document.createElement("a");
+      link.href = "/datenschutzerklarung/";
+      link.textContent = "Datenschutzerklärung";
+      text.append(link, " gelesen und stimme der Verarbeitung meiner Angaben zu.");
+      label.append(input, text);
+      const submit = form.querySelector<HTMLElement>('[type="submit"]');
+      if (submit?.parentElement) submit.parentElement.before(label);
+      else form.append(label);
+    }
+    const draft = formDraft.current;
+    const form = root.querySelector<HTMLFormElement>(".wpcf7-form");
+    if (!draft || !form) return;
+    for (const [key, value] of Object.entries(draft.fields)) {
+      const field = form.elements.namedItem(key);
+      if (field instanceof RadioNodeList || (field instanceof HTMLInputElement && field.type === "radio")) {
+        const match = form.querySelector<HTMLInputElement>(`input[type="radio"][name="${CSS.escape(key)}"][value="${CSS.escape(value)}"]`);
+        if (match) match.checked = true;
+      } else if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
+        field.value = value;
+      }
+    }
+    const box = form.querySelector<HTMLInputElement>('input[name="consent"]');
+    if (box) box.checked = draft.consent;
+  }, [page.html, status, viewer]);
 
   useEffect(() => {
     const root = contentRef.current;
@@ -64,7 +104,7 @@ export function SourceContent({ page }: { page: SourcePage }) {
       icon.removeEventListener("click", onClick);
       icon.removeEventListener("keydown", onKeyDown);
     };
-  }, [page.route, page.html]);
+  }, [page.route, page.html, status, viewer]);
 
   useEffect(() => {
     if (!viewer) return;
@@ -124,13 +164,22 @@ export function SourceContent({ page }: { page: SourcePage }) {
     if (!(form instanceof HTMLFormElement) || !form.matches(".wpcf7-form")) return;
     event.preventDefault();
     const values = new FormData(form);
+    const consentGiven = form.querySelector<HTMLInputElement>('input[name="consent"]')?.checked === true;
+    formDraft.current = {
+      fields: Object.fromEntries([...values.entries()].filter((entry): entry is [string, string] => typeof entry[1] === "string" && entry[0] !== "consent")),
+      consent: consentGiven,
+    };
+    if (!consentGiven) {
+      setStatus("error");
+      return;
+    }
     const payload = {
       name: String(values.get("your-name") ?? values.get("name") ?? ""),
       email: String(values.get("your-email") ?? values.get("email") ?? ""),
       phone: String(values.get("phone") ?? ""),
       eventType: String(values.get("BusinessorPrivat") ?? values.get("eventType") ?? ""),
       message: String(values.get("your-message") ?? values.get("message") ?? ""),
-      consent: "on",
+      consent: "on" as const,
     };
     setStatus("sending");
     const response = await fetch("/api/contact", {
@@ -138,8 +187,8 @@ export function SourceContent({ page }: { page: SourcePage }) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload),
     });
+    if (response.ok) formDraft.current = null;
     setStatus(response.ok ? "sent" : "error");
-    if (response.ok) form.reset();
   }
 
   const current = viewer?.images[viewer.index];
