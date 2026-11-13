@@ -983,7 +983,8 @@ p{
 /* Homepage imported-content refinements */
 .source-page[data-route="/"] .source-content #page_caption,.source-page[data-route="/about-us/"] .source-content #page_caption,
 .source-page[data-route="/privat/"] .source-content #page_caption,.source-page[data-route="/business/"] .source-content #page_caption,
-.source-page[data-route="/locations/"] .source-content #page_caption{
+.source-page[data-route="/locations/"] .source-content #page_caption,
+.source-page[data-route="/kontakt/"] .source-content #page_caption{
   display:none
 }
 .source-page[data-route="/about-us/"] .source-content [data-id="c2d90b6"] [data-id="da16bd6"],
