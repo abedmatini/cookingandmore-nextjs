@@ -60,6 +60,7 @@ function mountTurnstile(form: HTMLFormElement, siteKey: string) {
 
 export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePage; turnstileSiteKey?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [statusText, setStatusText] = useState("");
   const [viewer, setViewer] = useState<ViewerState | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -69,7 +70,7 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
   useLayoutEffect(() => {
     const root = contentRef.current;
     if (!root) return;
-    if (page.route === "/business/") {
+    if (page.route === "/business/" || page.route === "/locations/") {
       for (const card of root.querySelectorAll<HTMLElement>(".blog-posts-grid_no_space")) {
         if (card.querySelector(":scope > a.business-card-link")) continue;
         const titleLink = card.querySelector<HTMLAnchorElement>(".post-header-title a");
@@ -245,7 +246,9 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload),
     });
+    const result = await response.json().catch(() => null) as { error?: string } | null;
     if (response.ok) formDraft.current = null;
+    setStatusText(response.ok ? "Vielen Dank! Ihre Anfrage wurde an welcome@cookingandmore.de gesendet." : result?.error || "Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut.");
     setStatus(response.ok ? "sent" : "error");
   }
 
@@ -255,8 +258,8 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
     <div className="source-page" data-route={page.route} onSubmit={submit} onClick={openViewer}>
       <div ref={contentRef} className="source-content" dangerouslySetInnerHTML={{ __html: page.html }} />
       {status === "sending" && <p className="source-form-status">Ihre Anfrage wird gesendet …</p>}
-      {status === "sent" && <p className="source-form-status success" role="status">Vielen Dank! Ihre Anfrage wurde angenommen.</p>}
-      {status === "error" && <p className="source-form-status error" role="alert">Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut.</p>}
+      {status === "sent" && <p className="source-form-status success" role="status">{statusText}</p>}
+      {status === "error" && <p className="source-form-status error" role="alert">{statusText}</p>}
       {viewer && current && (
         <div className="image-lightbox" onClick={event => { if (event.target === event.currentTarget) closeViewer(); }}>
           <div className="image-lightbox-dialog" role="dialog" aria-modal="true" aria-label={current.alt || "Bildansicht"}>

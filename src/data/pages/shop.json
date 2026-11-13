@@ -1,8 +1,0 @@
-{
-  "route": "/shop/",
-  "title": "Shop",
-  "description": "",
-  "html": "<div id=\"page_caption\">\n\t\t\n\t<div class=\"page_title_wrapper baseline\">\n\t\t<div class=\"page_title_inner baseline\">\n\t\t\t<h1>\n\t\t\t Shop\t\t\t </h1>\n\t\t</div>\n\t\t\t\t\t\t<br class=\"clear\">\n\t\t\t</div>\n</div>\n    <div class=\"inner\">\n    \t<!-- Begin main content -->\n    \t<div class=\"inner_wrapper\">\n    \t\t<div class=\"sidebar_content full_width\">\n    \t\t\t\t\n    \t\n    \t\t        \t\t</div>\n    \t</div>\n    \t<!-- End main content -->\n    </div> \n",
-  "text": "Shop",
-  "sourceFile": "shop.html"
-}

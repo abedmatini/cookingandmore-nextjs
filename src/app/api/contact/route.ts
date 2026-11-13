@@ -1,17 +1,14 @@
 import { NextResponse } from "next/server";
+import { deliverContactMessage, mailDeliveryConfigured } from "@/lib/contact-mail";
 import { readTurnstileSecretKey, verifyTurnstileToken } from "@/lib/turnstile";
+import { rateLimitVisitor } from "@/lib/visitor-rate-limit";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_BODY_BYTES = 8_000;
-const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 30;
-const recentRequests: number[] = [];
 
-function isRateLimited() {
-  const now = Date.now();
-  while (recentRequests.length > 0 && now - recentRequests[0] >= WINDOW_MS) recentRequests.shift();
-  recentRequests.push(now);
-  return recentRequests.length > MAX_REQUESTS;
+function withCookie(response: NextResponse, setCookie?: string) {
+  if (setCookie) response.headers.append("set-cookie", setCookie);
+  return response;
 }
 
 async function readLimitedBody(request: Request) {
@@ -40,42 +37,69 @@ async function readLimitedBody(request: Request) {
   return new TextDecoder().decode(merged);
 }
 
+function textField(body: Record<string, unknown>, ...keys: string[]) {
+  for (const key of keys) {
+    const value = body[key];
+    if (typeof value === "string") return value;
+  }
+  return "";
+}
+
+function readFields(raw: string, contentType: string) {
+  if (contentType.includes("application/json")) {
+    try {
+      const parsed = JSON.parse(raw) as Record<string, unknown>;
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+  const params = new URLSearchParams(raw);
+  return Object.fromEntries(params.entries());
+}
+
 export async function POST(request: Request) {
-  if (isRateLimited()) {
-    return NextResponse.json({ ok: false, error: "Zu viele Anfragen" }, { status: 429 });
+  const limit = rateLimitVisitor(request.headers.get("cookie"));
+  if (limit.limited) {
+    return withCookie(NextResponse.json({ ok: false, error: "Zu viele Anfragen" }, { status: 429 }), limit.setCookie);
   }
 
   const raw = await readLimitedBody(request);
   if (raw === null) {
-    return NextResponse.json({ ok: false, error: "Anfrage zu groß" }, { status: 413 });
+    return withCookie(NextResponse.json({ ok: false, error: "Anfrage zu groß" }, { status: 413 }), limit.setCookie);
   }
 
-  const body = (() => {
-    try {
-      return JSON.parse(raw) as Record<string, unknown>;
-    } catch {
-      return null;
-    }
-  })();
-  const token = body && (typeof body.turnstileToken === "string" ? body.turnstileToken : typeof body["cf-turnstile-response"] === "string" ? body["cf-turnstile-response"] : "");
-  if (!body || typeof token !== "string" || token.length < 10 || token.length > 2048) {
-    return NextResponse.json({ ok: false, error: "Sicherheitsprüfung fehlt" }, { status: 400 });
+  const body = readFields(raw, request.headers.get("content-type") ?? "");
+  const token = textField(body ?? {}, "turnstileToken", "cf-turnstile-response");
+  if (!body || token.length < 10 || token.length > 2048) {
+    return withCookie(NextResponse.json({ ok: false, error: "Sicherheitsprüfung fehlt" }, { status: 400 }), limit.setCookie);
   }
   if (!readTurnstileSecretKey()) {
-    return NextResponse.json({ ok: false, error: "Sicherheitsprüfung nicht verfügbar" }, { status: 503 });
+    return withCookie(NextResponse.json({ ok: false, error: "Sicherheitsprüfung nicht verfügbar" }, { status: 503 }), limit.setCookie);
   }
   const accepted = await verifyTurnstileToken(token);
   if (!accepted) {
-    return NextResponse.json({ ok: false, error: "Sicherheitsprüfung fehlgeschlagen" }, { status: 403 });
+    return withCookie(NextResponse.json({ ok: false, error: "Sicherheitsprüfung fehlgeschlagen" }, { status: 403 }), limit.setCookie);
   }
 
-  if (typeof body.name !== "string" || body.name.trim().length < 2 ||
-      typeof body.email !== "string" || !emailPattern.test(body.email) ||
-      typeof body.message !== "string" || body.message.trim().length < 10 ||
-      body.consent !== "on") {
-    return NextResponse.json({ ok: false, error: "Ungültige Eingaben" }, { status: 400 });
+  const name = textField(body, "name", "your-name");
+  const email = textField(body, "email", "your-email");
+  const message = textField(body, "message", "your-message");
+  const phone = textField(body, "phone", "tel");
+  const eventType = textField(body, "eventType", "BusinessorPrivat");
+  if (name.trim().length < 2 || !emailPattern.test(email) || message.trim().length < 10 || body.consent !== "on") {
+    return withCookie(NextResponse.json({ ok: false, error: "Ungültige Eingaben" }, { status: 400 }), limit.setCookie);
+  }
+  if (!mailDeliveryConfigured()) {
+    return withCookie(NextResponse.json({ ok: false, error: "Der E-Mail-Versand ist noch nicht eingerichtet." }, { status: 503 }), limit.setCookie);
   }
 
-  console.info("Contact form accepted");
-  return NextResponse.json({ ok: true });
+  try {
+    await deliverContactMessage({ name: name.trim(), email: email.trim(), phone: phone.trim(), eventType: eventType.trim(), message: message.trim() });
+  } catch {
+    return withCookie(NextResponse.json({ ok: false, error: "Die Anfrage konnte nicht zugestellt werden." }, { status: 502 }), limit.setCookie);
+  }
+
+  console.info("Contact form delivered");
+  return withCookie(NextResponse.json({ ok: true }), limit.setCookie);
 }

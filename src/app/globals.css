@@ -700,7 +700,26 @@ p{
 }
 .source-page[data-route="/"] .source-content .elementor>section:first-child{
   min-height:100vh;
-  background-image:linear-gradient(#0005,#0005),url("/media/hero-original.jpg")
+  overflow:hidden;
+  background:#111 url("/media/hero-original.jpg") center top/cover
+}
+.source-page[data-route="/"] .source-content .elementor-background-video-container{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  overflow:hidden;
+  pointer-events:none
+}
+.source-page[data-route="/"] .source-content .elementor-background-video-container iframe{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100vw;
+  height:56.25vw;
+  min-width:177.78vh;
+  min-height:100%;
+  transform:translate(-50%,-50%);
+  border:0
 }
 .source-content .elementor-container,.source-content .e-con-inner{
   width:min(100%,1200px);
@@ -849,16 +868,19 @@ p{
   }
   .menu-toggle{
     display:block;
-    z-index:2
+    position:relative;
+    z-index:50
   }
   .nav{
     display:none;
-    position:absolute;
-    inset:0 0 auto;
+    position:fixed;
+    inset:0;
+    z-index:40;
     background:var(--green);
-    padding:105px 30px 35px;
-    max-height:100vh;
-    overflow:auto;
+    padding:105px 30px 48px;
+    height:100dvh;
+    max-height:none;
+    overflow-y:auto;
     flex-direction:column;
     align-items:flex-start;
     font-size:.8rem
@@ -1306,12 +1328,14 @@ p{
 .source-page[data-route="/"] .source-content [data-id="8589bf1"]{
   display:none
 }
-.source-page[data-route="/business/"] .source-content .layout-grid_no_space{
+.source-page[data-route="/business/"] .source-content .layout-grid_no_space,
+.source-page[data-route="/locations/"] .source-content .layout-grid_no_space{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:20px
 }
-.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space{
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space,
+.source-page[data-route="/locations/"] .source-content .blog-posts-grid_no_space{
   aspect-ratio:4 / 3;
   background-position:center;
   background-repeat:no-repeat;
@@ -1321,18 +1345,21 @@ p{
   margin:0;
   position:relative
 }
-.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space::before{
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space::before,
+.source-page[data-route="/locations/"] .source-content .blog-posts-grid_no_space::before{
   content:"";
   position:absolute;
   inset:0;
   background:linear-gradient(transparent 40%,#0009)
 }
-.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space .post-wrapper{
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space .post-wrapper,
+.source-page[data-route="/locations/"] .source-content .blog-posts-grid_no_space .post-wrapper{
   position:relative;
   z-index:1;
   width:100%
 }
-.source-page[data-route="/business/"] .source-content .business-card-link{
+.source-page[data-route="/business/"] .source-content .business-card-link,
+.source-page[data-route="/locations/"] .source-content .business-card-link{
   position:absolute;
   inset:0;
   z-index:1;
@@ -1342,11 +1369,13 @@ p{
   color:#fff;
   text-decoration:none
 }
-.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space h5{
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space h5,
+.source-page[data-route="/locations/"] .source-content .blog-posts-grid_no_space h5{
   margin:0 0 4px;
   font-size:1.35rem
 }
-.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space a{
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space a,
+.source-page[data-route="/locations/"] .source-content .blog-posts-grid_no_space a{
   color:#fff
 }
 @media(prefers-reduced-motion:reduce){
@@ -1483,7 +1512,8 @@ p{
   .image-lightbox-nav.next{
     right:8px
   }
-  .source-page[data-route="/business/"] .source-content .layout-grid_no_space{
+  .source-page[data-route="/business/"] .source-content .layout-grid_no_space,
+  .source-page[data-route="/locations/"] .source-content .layout-grid_no_space{
     grid-template-columns:1fr 1fr;
     gap:12px
   }

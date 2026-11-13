@@ -162,15 +162,10 @@ export const posts: PageRecord[] = [
 ];
 
 const inventoryPaths = [
-  "/kontakt/","/datenschutzerklarung/","/impressum/","/about-us/","/te/","/our-services/","/menu-parallax/","/menu-grid/","/shop/","/sample-page/","/our-chefs/","/menu-grid-image/","/menu-classic/","/menu-mixed/","/shop-2/",
-  "/zur-gemutlichen-ekce-2/","/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/","/verleihen-sie-ihrem-gala-event-glanz-mit-dem-business-catering-von-cooking-and-more/","/entdecken-sie-business-catering-streetfood/","/e-palladium/","/e-werk/","/junilaumscatering/","/streetfooentdecken-sie-business-catering-streetfood/","/feiern-sie-ihre-sommerfest-mit-dem-business-catering-von-cooking-and-more/","/secret-of-making-smoked-pork/","/recipe-is-important-part-of-cooking/",
+  "/kontakt/","/datenschutzerklarung/","/impressum/","/about-us/","/te/","/our-services/","/our-chefs/",
+  "/zur-gemutlichen-ekce-2/","/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/","/verleihen-sie-ihrem-gala-event-glanz-mit-dem-business-catering-von-cooking-and-more/","/entdecken-sie-business-catering-streetfood/","/e-palladium/","/e-werk/","/junilaumscatering/","/streetfooentdecken-sie-business-catering-streetfood/","/feiern-sie-ihre-sommerfest-mit-dem-business-catering-von-cooking-and-more/",
   ...["uncategorized","cooking","modern-fusion","streetfood","foodtrucks","weihnachtsfeier","sommerfest","gala","messe-crewcatering","hochzeit","jubilaum","doc2","e-werk","e-palladium","zur-gemutlichen-ekce","goldener-pflug","alte-giesserei"].map(x=>`/category/${x}/`),
-  ...["cooking","cuisine","dinning","recipe","restaurant"].map(x=>`/tag/${x}/`),
   "/galleries/home-4-gallery/",
-  ...["baked-potato-pizza","imported-salmon-steak","crab-with-curry-sources","salted-fried-chicken","roast-pork-4-sticks","tuna-roast-potatoes-source","fried-potatoes-with-garlic","italian-source-mushroom","fried-chicken-salad","grilled-salmon-sushi","fresh-crab-with-lemon-source","spicy-crab-ramen","pork-with-italian-salsa-verde","lamb-beef-kofka-skewers-with-tzatziki","bacon-wrapped-shrimp-with-smoked-paprika-garlic","lemon-and-garlic-green-beans","roasted-red-potatoes-with-rosemary-shallots-butter","black-bean-sweet-potato-quinoa-meatlessloaf","wild-mushroom-bucatini-with-kale","prawn-sausage-cassoulet","meatloaf-with-black-pepper-honey-bbq-sauce","grilled-hanger-steak-with-harissa-and-pickled-red-onions","braised-chicken-breast-with-white-wine-and-shallots","apple-smoked-chicken-with-white-bbq-sauce","lemon-rosemary-chicken","grilled-pork-shoulder-with-preserved-lemons","pork-tenderloin-marinated-in-yogurt","oysters-grill-5-pieces"].map(x=>`/menus/${x}/`),
-  ...["extra-corporate","corporate","business","standard"].map(x=>`/pricing/${x}/`),
-  ...["mark-bennett","oliver-doe","christina-hardy"].map(x=>`/team/${x}/`),
-  ...["jessica-lee","jane-bennett","christina-hardy","mark-anthony"].map(x=>`/testimonials/${x}/`),
 ];
 
 const titleFromPath = (path: string) => {
@@ -181,8 +176,8 @@ const titleFromPath = (path: string) => {
 export const inventoryPages: PageRecord[] = inventoryPaths.map(path => ({
   path,
   title: titleFromPath(path),
-  description: path.startsWith("/category/") ? "Beiträge aus dieser Kategorie" : path.startsWith("/tag/") ? "Beiträge zu diesem Schlagwort" : "Aus dem Cooking and More Archiv",
-  kind: path.startsWith("/category/") || path.startsWith("/tag/") ? "archive" : "demo",
+  description: path.startsWith("/category/") ? "Beiträge aus dieser Kategorie" : "Aus dem Cooking and More Archiv",
+  kind: path.startsWith("/category/") ? "archive" : "demo",
 }));
 
 export const allPages = [...companyPages, ...posts, ...inventoryPages].filter(
