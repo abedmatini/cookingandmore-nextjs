@@ -1007,7 +1007,9 @@ p{
 .source-page[data-route="/doc2/"] .source-content .post_wrapper,
 .source-page[data-route="/e-palladium/"] .source-content .post_wrapper,
 .source-page[data-route="/goldenerpflug/"] .source-content .post_wrapper,
-.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content .post_wrapper{
+.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content .post_wrapper,
+.source-page[data-route="/hafen12/"] .source-content .post_wrapper,
+.source-page[data-route="/lokschuppen/"] .source-content .post_wrapper{
   padding-top:0
 }
 .source-page[data-route="/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/"] .source-content [data-id="d8c8881"],
@@ -1022,7 +1024,9 @@ p{
 .source-page[data-route="/doc2/"] .source-content [data-id="d8c8881"],
 .source-page[data-route="/e-palladium/"] .source-content [data-id="d8c8881"],
 .source-page[data-route="/goldenerpflug/"] .source-content [data-id="d8c8881"],
-.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content [data-id="d8c8881"]{
+.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/hafen12/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/lokschuppen/"] .source-content [data-id="d8c8881"]{
   display:none
 }
 .source-page[data-route="/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
@@ -1037,7 +1041,9 @@ p{
 .source-page[data-route="/doc2/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
 .source-page[data-route="/e-palladium/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
 .source-page[data-route="/goldenerpflug/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
-.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content [data-id="26f8fe6"]>.e-con-inner{
+.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/hafen12/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/lokschuppen/"] .source-content [data-id="26f8fe6"]>.e-con-inner{
   padding-top:24px
 }
 .source-page[data-route="/impressum/"] .source-content #page_caption,.source-page[data-route="/datenschutzerklarung/"] .source-content #page_caption{
