@@ -1201,7 +1201,9 @@ p{
   width:100%;
   box-sizing:border-box
 }
-.source-page[data-route="/"] .source-content .wpcf7-form input[type="submit"]{
+.source-content form input[type="submit"],
+.source-content form button[type="submit"],
+.contact-form button{
   display:block;
   width:100%;
   box-sizing:border-box;
