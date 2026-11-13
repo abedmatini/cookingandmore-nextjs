@@ -68,7 +68,7 @@ function imageKey(filename: string) {
 
 function images() {
   if (imageIndex) return imageIndex;
-  imageIndex = new Map();
+  const index = new Map<string, IndexedImage>();
   const walk = (dir: string) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const full = path.join(dir, entry.name);
@@ -80,12 +80,13 @@ function images() {
       const key = imageKey(entry.name);
       const size = fs.statSync(full).size;
       const href = `/${path.relative(PUBLIC_DIR, full).split(path.sep).join("/")}`;
-      const current = imageIndex.get(key);
-      if (!current || size > current.size) imageIndex.set(key, { href, size });
+      const current = index.get(key);
+      if (!current || size > current.size) index.set(key, { href, size });
     }
   };
   walk(PUBLIC_DIR);
-  return imageIndex;
+  imageIndex = index;
+  return index;
 }
 
 function localImage(reference: string) {

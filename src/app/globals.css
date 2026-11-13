@@ -33,7 +33,7 @@
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-widget-image img{display:block;width:27px;height:37px;margin:auto}
 .source-page[data-route="/"] .source-content .elementor>section:first-child h1{font-size:clamp(3.5rem,7vw,6.5rem);margin-bottom:8px}
 .source-page[data-route="/"] .source-content .elementor>section:first-child h2{max-width:920px;margin:0 auto;font-size:clamp(1.25rem,2.3vw,2rem);line-height:1.25;letter-spacing:-.02em}
-.source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-widget-icon{position:absolute;left:50%;bottom:28px;width:54px;margin:0;transform:translateX(-50%);z-index:3}
+.source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-widget-icon{position:absolute;left:50%;bottom:28px;width:54px;margin:0;transform:translateX(-50%);z-index:3;cursor:pointer}
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-icon{width:54px;height:54px;border:1px solid #fff9;border-radius:50%;display:grid;place-items:center}
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-icon svg{display:block;width:16px;height:16px;fill:#fff}
 .source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-shape{display:none}
@@ -42,10 +42,15 @@
 .source-page[data-route="/"] .source-content .wpcf7-form{width:100%;max-width:none}
 .source-page[data-route="/"] .source-content .wpcf7-form p,.source-page[data-route="/"] .source-content .wpcf7-form label,.source-page[data-route="/"] .source-content .wpcf7-form .wpcf7-form-control-wrap{display:block;width:100%}
 .source-page[data-route="/"] .source-content .wpcf7-form input:not([type="hidden"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),.source-page[data-route="/"] .source-content .wpcf7-form select,.source-page[data-route="/"] .source-content .wpcf7-form textarea{display:block;width:100%;max-width:none}
-.source-page[data-route="/"] .source-content .elementor-widget-owl-carousel-elementor,.source-page[data-route="/"] .source-content .owce-carousel-container{width:100%;min-width:0}
-.source-page[data-route="/"] .source-content .owce-carousel{display:flex;align-items:center;gap:clamp(28px,4vw,60px);overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;scrollbar-width:thin;scrollbar-color:var(--gold) #eee;padding:24px 4px}
-.source-page[data-route="/"] .source-content .owce-carousel>.item{display:flex;flex:0 0 clamp(150px,18vw,220px);align-items:center;justify-content:center;scroll-snap-align:start}
+.source-page[data-route="/"] .source-content .elementor>section:first-child .elementor-widget-icon:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.source-page[data-route="/"] .source-content [data-id="5f53fd4"],.source-page[data-route="/"] .source-content .elementor-widget-owl-carousel-elementor,.source-page[data-route="/"] .source-content .owce-carousel-container{width:100%;min-width:0;overflow:hidden}
+.source-page[data-route="/"] .source-content .owce-carousel{display:flex;align-items:center;width:max-content;overflow:visible;padding:24px 0;animation:logo-row-drift 56s linear infinite}
+.source-page[data-route="/"] .source-content .owce-carousel>.item{display:flex;flex:0 0 clamp(150px,18vw,220px);align-items:center;justify-content:center;margin-right:clamp(28px,4vw,60px)}
 .source-page[data-route="/"] .source-content .owce-carousel>.item img{display:block;width:100%;max-width:180px;height:110px;object-fit:contain}
+@keyframes logo-row-drift{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){
+  .source-page[data-route="/"] .source-content .owce-carousel{animation:none}
+}
 
 .source-content a[data-lightbox]{cursor:zoom-in}
 .image-lightbox{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:72px 96px;background:#050505}
@@ -65,7 +70,6 @@
   .source-page[data-route="/"] .source-content .elementor>section:first-child>.elementor-container{display:block;padding:30px 22px}
   .source-page[data-route="/"] .source-content .elementor>section:first-child h1{font-size:clamp(2.8rem,14vw,4rem)}
   .source-page[data-route="/"] .source-content .elementor>section:first-child h2{font-size:clamp(1rem,5vw,1.35rem)}
-  .source-page[data-route="/"] .source-content .owce-carousel{margin-right:-22px;padding-right:22px}
   .source-page[data-route="/"] .source-content .owce-carousel>.item{flex-basis:150px}
   .source-page[data-route="/"] .source-content .owce-carousel>.item img{height:90px}
   .image-lightbox{padding:64px 16px}

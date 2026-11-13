@@ -27,6 +27,44 @@ export function SourceContent({ page }: { page: SourcePage }) {
   const [viewer, setViewer] = useState<ViewerState | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = contentRef.current;
+    if (!root || page.route !== "/") return;
+
+    const carousel = root.querySelector<HTMLElement>(".owce-carousel");
+    if (carousel && carousel.dataset.looped !== "true") {
+      for (const item of [...carousel.children]) {
+        const clone = item.cloneNode(true) as HTMLElement;
+        clone.setAttribute("aria-hidden", "true");
+        clone.querySelectorAll("a, button").forEach(node => node.setAttribute("tabindex", "-1"));
+        carousel.appendChild(clone);
+      }
+      carousel.dataset.looped = "true";
+    }
+
+    const icon = root.querySelector<HTMLElement>(".elementor > section:first-child .elementor-widget-icon");
+    if (!icon) return;
+    icon.setAttribute("role", "button");
+    icon.tabIndex = 0;
+    icon.setAttribute("aria-label", "Nach unten scrollen");
+    const scrollDown = () => {
+      root.querySelector('[data-id="5f53fd4"]')?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    const onClick = () => scrollDown();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      scrollDown();
+    };
+    icon.addEventListener("click", onClick);
+    icon.addEventListener("keydown", onKeyDown);
+    return () => {
+      icon.removeEventListener("click", onClick);
+      icon.removeEventListener("keydown", onKeyDown);
+    };
+  }, [page.route, page.html]);
 
   useEffect(() => {
     if (!viewer) return;
@@ -108,7 +146,7 @@ export function SourceContent({ page }: { page: SourcePage }) {
 
   return (
     <div className="source-page" data-route={page.route} onSubmit={submit} onClick={openViewer}>
-      <div className="source-content" dangerouslySetInnerHTML={{ __html: page.html }} />
+      <div ref={contentRef} className="source-content" dangerouslySetInnerHTML={{ __html: page.html }} />
       {status === "sending" && <p className="source-form-status">Ihre Anfrage wird gesendet …</p>}
       {status === "sent" && <p className="source-form-status success" role="status">Vielen Dank! Ihre Anfrage wurde angenommen.</p>}
       {status === "error" && <p className="source-form-status error" role="alert">Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut.</p>}
