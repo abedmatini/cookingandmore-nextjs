@@ -809,7 +809,7 @@ p{
   padding:10px;
   background:#fff
 }
-.source-page[data-route="/"] .source-content .wpcf7-form label.consent{
+.source-page[data-route="/"] .source-content .enquiry-form label.consent{
   display:flex;
   align-items:flex-start;
   gap:16px;
@@ -824,7 +824,7 @@ p{
 .source-content .cf-turnstile,.contact-form .cf-turnstile{
   margin:8px 0 16px
 }
-.source-page .source-content .wpcf7-form label.consent input{
+.source-page .source-content .enquiry-form label.consent input{
   width:18px;
   height:18px;
   flex:none;
@@ -1232,17 +1232,16 @@ p{
   min-height:56px;
   padding:16px 30px
 }
-.source-page[data-route="/"] .source-content .wpcf7-form{
+.source-page[data-route="/"] .source-content .enquiry-form{
   width:100%;
   max-width:none
 }
-.source-page[data-route="/"] .source-content .wpcf7-form p,.source-page[data-route="/"] .source-content .wpcf7-form label,
-.source-page[data-route="/"] .source-content .wpcf7-form .wpcf7-form-control-wrap{
+.source-page[data-route="/"] .source-content .enquiry-form p,.source-page[data-route="/"] .source-content .enquiry-form label{
   display:block;
   width:100%
 }
-.source-page[data-route="/"] .source-content .wpcf7-form input:not([type="hidden"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
-.source-page[data-route="/"] .source-content .wpcf7-form select,.source-page[data-route="/"] .source-content .wpcf7-form textarea{
+.source-page[data-route="/"] .source-content .enquiry-form input:not([type="hidden"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+.source-page[data-route="/"] .source-content .enquiry-form select,.source-page[data-route="/"] .source-content .enquiry-form textarea{
   display:block;
   width:100%;
   max-width:none

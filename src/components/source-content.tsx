@@ -88,7 +88,7 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
         }
       }
     }
-    for (const form of root.querySelectorAll<HTMLFormElement>(".wpcf7-form")) {
+    for (const form of root.querySelectorAll<HTMLFormElement>(".enquiry-form")) {
       if (!form.querySelector('input[name="consent"]')) {
         const label = document.createElement("label");
         label.className = "consent";
@@ -111,7 +111,7 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
       mountTurnstile(form, turnstileSiteKey);
     }
     const draft = formDraft.current;
-    const form = root.querySelector<HTMLFormElement>(".wpcf7-form");
+    const form = root.querySelector<HTMLFormElement>(".enquiry-form");
     if (!draft || !form) return;
     for (const [key, value] of Object.entries(draft.fields)) {
       const field = form.elements.namedItem(key);
@@ -218,7 +218,7 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
 
   async function submit(event: FormEvent<HTMLDivElement>) {
     const form = event.target;
-    if (!(form instanceof HTMLFormElement) || !form.matches(".wpcf7-form")) return;
+    if (!(form instanceof HTMLFormElement) || !form.matches(".enquiry-form")) return;
     event.preventDefault();
     const values = new FormData(form);
     const consentGiven = form.querySelector<HTMLInputElement>('input[name="consent"]')?.checked === true;

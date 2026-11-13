@@ -217,13 +217,39 @@ export function repairContentHtml(html: string, stats?: LinkRepairStats) {
   $("form").each((_, element) => {
     const form = $(element);
     const action = form.attr("action") ?? "";
+    const enquiry = form.hasClass("wpcf7-form") || /wpcf7/.test(action) || form.find('input[name^="_wpcf7"]').length > 0;
     if (/wp-comments-post\.php/i.test(action)) {
       form.remove();
       return;
     }
-    if (form.hasClass("wpcf7-form")) {
-      form.attr("action", "/api/contact/");
-      form.attr("method", "post");
+    if (!enquiry) return;
+    form.attr("action", "/api/contact/");
+    form.attr("method", "post");
+    form.removeAttr("data-status");
+    form.find(".hidden-fields-container, .screen-reader-response, .wpcf7-response-output, .wpcf7-spinner, .wpcf7-not-valid-tip").remove();
+    form.find("input, textarea, select").each((__, field) => {
+      const name = $(field).attr("name") ?? "";
+      if (name.startsWith("_wpcf7") || name.startsWith("quiz-")) $(field).remove();
+    });
+    form.find(".wpcf7-quiz, .wpcf7-quiz-label").remove();
+    form.find("span.wpcf7-form-control-wrap").each((__, span) => {
+      $(span).replaceWith($(span).contents());
+    });
+    form.find("[class]").addBack("[class]").each((__, node) => {
+      const next = ($(node).attr("class") ?? "").split(/\s+/).filter(token => token && !token.startsWith("wpcf7")).join(" ");
+      if (next) $(node).attr("class", next);
+      else $(node).removeAttr("class");
+    });
+    form.addClass("enquiry-form");
+    const shell = form.parent();
+    if (shell.is("div")) {
+      const shellClass = (shell.attr("class") ?? "").split(/\s+/).filter(token => token && !token.startsWith("wpcf7")).join(" ");
+      shell.attr("class", shellClass || "enquiry");
+      shell.removeAttr("data-status");
+      shell.removeAttr("data-wpcf7-id");
+      const shellId = shell.attr("id") ?? "";
+      if (shellId.startsWith("wpcf7")) shell.removeAttr("id");
+      shell.find(".screen-reader-response").remove();
     }
   });
   $(".elementor-background-video-embed").each((_, element) => {
