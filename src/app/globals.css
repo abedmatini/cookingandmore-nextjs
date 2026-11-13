@@ -1301,6 +1301,40 @@ p{
 .source-page[data-route="/"] .source-content [data-id="8589bf1"]{
   display:none
 }
+.source-page[data-route="/business/"] .source-content .layout-grid_no_space{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px
+}
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space{
+  aspect-ratio:4 / 3;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+  display:flex;
+  align-items:flex-end;
+  margin:0;
+  position:relative
+}
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(transparent 40%,#0009)
+}
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space .post-wrapper{
+  position:relative;
+  z-index:1;
+  width:100%;
+  padding:18px 20px
+}
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space h5{
+  margin:0 0 4px;
+  font-size:1.35rem
+}
+.source-page[data-route="/business/"] .source-content .blog-posts-grid_no_space a{
+  color:#fff
+}
 @media(prefers-reduced-motion:reduce){
   .source-page[data-route="/"] .source-content .owce-carousel{
     animation:none
@@ -1434,5 +1468,9 @@ p{
   }
   .image-lightbox-nav.next{
     right:8px
+  }
+  .source-page[data-route="/business/"] .source-content .layout-grid_no_space{
+    grid-template-columns:1fr 1fr;
+    gap:12px
   }
 }
