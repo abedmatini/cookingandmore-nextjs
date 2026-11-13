@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${title} - Cooking And More`,
     description,
+    robots: { index: false, follow: false },
     alternates: { canonical: `https://cookingandmore.de${path}` },
     openGraph: { title: `${title} - Cooking And More`, description, type: page?.kind === "post" ? "article" : "website", images: page?.image ? [page.image] : ["/media/hochzeit.jpeg"] },
   };

@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://cookingandmore.de"),
   title: { default: "Cooking And More | Catering Köln", template: "%s | Cooking And More" },
   description: "Maßgeschneidertes Catering, außergewöhnliche Events und besondere Locations in Köln.",
+  robots: { index: false, follow: false },
   openGraph: { siteName: "Cooking And More", locale: "de_DE", type: "website" },
 };
 
