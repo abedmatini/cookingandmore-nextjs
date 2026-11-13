@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, MouseEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { syncConsentMedia } from "@/components/cookie-banner";
 import type { SourcePage } from "@/data/source";
 
 type ViewerImage = { src: string; alt: string };
@@ -110,6 +111,7 @@ export function SourceContent({ page, turnstileSiteKey = "" }: { page: SourcePag
       }
       mountTurnstile(form, turnstileSiteKey);
     }
+    syncConsentMedia();
     const draft = formDraft.current;
     const form = root.querySelector<HTMLFormElement>(".enquiry-form");
     if (!draft || !form) return;
