@@ -986,6 +986,60 @@ p{
 .source-page[data-route="/locations/"] .source-content #page_caption{
   display:none
 }
+.source-page[data-route="/about-us/"] .source-content [data-id="c2d90b6"] [data-id="da16bd6"],
+.source-page[data-route="/about-us/"] .source-content [data-id="c2d90b6"] [data-id="a021621"]{
+  display:none
+}
+.source-page[data-route="/about-us/"] .source-content [data-id="c2d90b6"] [data-id="76b50cd"]{
+  flex:1 1 100%;
+  width:100%;
+  max-width:none
+}
+.source-page[data-route="/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/"] .source-content .post_wrapper,
+.source-page[data-route="/verleihen-sie-ihrem-gala-event-glanz-mit-dem-business-catering-von-cooking-and-more/"] .source-content .post_wrapper,
+.source-page[data-route="/feiern-sie-ihre-sommerfest-mit-dem-business-catering-von-cooking-and-more/"] .source-content .post_wrapper,
+.source-page[data-route="/feiern-sie-ihre-weihnachtsfeier-mit-dem-business-catering-von-cooking-and-more/"] .source-content .post_wrapper,
+.source-page[data-route="/entdecken-sie-business-catering-streetfood/"] .source-content .post_wrapper,
+.source-page[data-route="/streetfooentdecken-sie-business-catering-streetfood/"] .source-content .post_wrapper,
+.source-page[data-route="/junilaumscatering/"] .source-content .post_wrapper,
+.source-page[data-route="/alte-giesserei/"] .source-content .post_wrapper,
+.source-page[data-route="/e-werk/"] .source-content .post_wrapper,
+.source-page[data-route="/doc2/"] .source-content .post_wrapper,
+.source-page[data-route="/e-palladium/"] .source-content .post_wrapper,
+.source-page[data-route="/goldenerpflug/"] .source-content .post_wrapper,
+.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content .post_wrapper{
+  padding-top:0
+}
+.source-page[data-route="/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/verleihen-sie-ihrem-gala-event-glanz-mit-dem-business-catering-von-cooking-and-more/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/feiern-sie-ihre-sommerfest-mit-dem-business-catering-von-cooking-and-more/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/feiern-sie-ihre-weihnachtsfeier-mit-dem-business-catering-von-cooking-and-more/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/entdecken-sie-business-catering-streetfood/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/streetfooentdecken-sie-business-catering-streetfood/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/junilaumscatering/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/alte-giesserei/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/e-werk/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/doc2/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/e-palladium/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/goldenerpflug/"] .source-content [data-id="d8c8881"],
+.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content [data-id="d8c8881"]{
+  display:none
+}
+.source-page[data-route="/perfektes-business-catering-fur-messen-und-crew-events-mit-cooking-and-more/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/verleihen-sie-ihrem-gala-event-glanz-mit-dem-business-catering-von-cooking-and-more/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/feiern-sie-ihre-sommerfest-mit-dem-business-catering-von-cooking-and-more/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/feiern-sie-ihre-weihnachtsfeier-mit-dem-business-catering-von-cooking-and-more/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/entdecken-sie-business-catering-streetfood/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/streetfooentdecken-sie-business-catering-streetfood/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/junilaumscatering/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/alte-giesserei/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/e-werk/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/doc2/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/e-palladium/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/goldenerpflug/"] .source-content [data-id="26f8fe6"]>.e-con-inner,
+.source-page[data-route="/zur-gemutlichen-ekce-2/"] .source-content [data-id="26f8fe6"]>.e-con-inner{
+  padding-top:24px
+}
 .source-page[data-route="/impressum/"] .source-content #page_caption,.source-page[data-route="/datenschutzerklarung/"] .source-content #page_caption{
   min-height:0;
   align-items:flex-end;
