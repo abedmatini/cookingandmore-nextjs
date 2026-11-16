@@ -16,7 +16,7 @@ const cateringLinks = [
 ];
 
 const locationLinks = [
-  ["Zur gemütlichen Ecke", "/zur-gemutlichen-ekce/"],
+  ["Zur gemütlichen Ecke", "/zur-gemutlichen-ekce-2/"],
   ["Palladium", "/e-palladium/"],
   ["E-Werk", "/e-werk/"],
   ["DOCK2", "/doc2/"],

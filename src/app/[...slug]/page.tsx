@@ -6,6 +6,8 @@ import { ContactForm } from "@/components/contact-form";
 import { SourceContent } from "@/components/source-content";
 import { allPages, getPage, locations, posts } from "@/data/site";
 import { getSourcePage } from "@/data/source";
+import { repairContentHtml } from "@/lib/repair-content-links";
+import { readTurnstileSiteKey } from "@/lib/turnstile";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
@@ -18,12 +20,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const path = `/${slug.join("/")}/`;
   const source = getSourcePage(path);
   const page = getPage(path);
-  if (!page && !source) return {};
+  if (!page && !source) {
+    return {
+      title: "Seite nicht gefunden",
+      robots: { index: false, follow: false },
+    };
+  }
   const title = source?.title ?? page!.title;
   const description = source?.description ?? page?.description ?? "Cooking and More – Catering, Events und Locations in Köln.";
   return {
     title: `${title} - Cooking And More`,
     description,
+    robots: { index: false, follow: false },
     alternates: { canonical: `https://cookingandmore.de${path}` },
     openGraph: { title: `${title} - Cooking And More`, description, type: page?.kind === "post" ? "article" : "website", images: page?.image ? [page.image] : ["/media/hochzeit.jpeg"] },
   };
@@ -37,9 +45,22 @@ function ContactPage() {
         <div><span className="kicker gold">Kontaktiere uns</span><h2>Wir freuen uns auf Ihre Anfrage.</h2><p>Erzählen Sie uns von Ihrem Anlass. Gemeinsam entwickeln wir ein Catering-Konzept, das zu Ihnen und Ihren Gästen passt.</p>
           <div className="contact-details"><div><small>Adresse</small><p>Hafenstraße 7<br />51063 Köln Mülheim</p></div><div><small>Kontakt</small><p><a href="tel:+4922175944444">0221 – 7594 4444</a><br /><a href="mailto:welcome@cookingandmore.de">welcome@cookingandmore.de</a></p></div></div>
         </div>
-        <ContactForm />
+        <ContactForm turnstileSiteKey={readTurnstileSiteKey()} />
       </section>
     </>
+  );
+}
+
+function CookiePolicy() {
+  return (
+    <article className="legal section" id="cookies">
+      <h2>Cookies</h2>
+      <p>Cookies sind kleine Dateien, die Ihr Browser speichert. Notwendige Cookies setzen wir ohne gesonderte Einwilligung, weil die Seite sonst Ihre Auswahl nicht merken oder das Formular nicht schützen kann. Der YouTube-Film ist freiwillig.</p>
+      <h3>Notwendig</h3>
+      <p>Die Auswahl „Nur notwendige“ oder „Alle akzeptieren“ speichern wir sechs Monate im Cookie cam_consent. Beim Absenden des Kontaktformulars setzt die Website außerdem ein technisches Cookie, das wiederholte Anfragen begrenzt. Das Formular lädt Cloudflare Turnstile, damit automatisierte Nachrichten blockiert werden. Dabei kann Cloudflare technische Daten des Browsers verarbeiten. Das ist erforderlich, um eine Anfrage zu senden.</p>
+      <h3>Externe Medien</h3>
+      <p>Wenn Sie „Alle akzeptieren“ wählen, lädt der Seitenkopf den Film von YouTube. Dabei wird eine Verbindung zu Google aufgebaut. Ohne diese Zustimmung bleibt der Film aus. Sie können die Zustimmung unten über „Cookie-Einstellungen“ widerrufen. Die gespeicherte Auswahl wird dann gelöscht und neu gesetzt.</p>
+    </article>
   );
 }
 
@@ -58,6 +79,7 @@ function LegalPage({ privacy = false }: { privacy?: boolean }) {
           <h2>5. Soziale Medien</h2><p>Auf dieser Website können Elemente von Facebook und Instagram integriert sein. Die Nutzung erfolgt auf Grundlage Ihrer Einwilligung.</p>
           <h2>6. Analyse-Tools und Werbung</h2><h3>IONOS WebAnalytics</h3><p>Diese Website kann die Analysedienste von IONOS WebAnalytics nutzen. Die Datenerfassung erfolgt laut IONOS vollständig anonymisiert.</p>
           <h2>7. Plugins und Tools</h2><h3>Google Fonts und Font Awesome</h3><p>Diese Seite nutzt Schriftarten zur einheitlichen Darstellung. Font Awesome wird lokal gehostet.</p>
+          <CookiePolicy />
         </> : <>
           <p>Cooking and More GmbH<br />Hafenstraße 7<br />51063 Köln Mülheim</p>
           <h2>Handelsregister</h2><p>Handelsregister: 64469<br />Registergericht: Köln Porz</p>
@@ -79,7 +101,12 @@ export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const path = `/${slug.join("/")}/`;
   const source = getSourcePage(path);
-  if (source) return <SourceContent page={source} />;
+  if (source) return (
+    <>
+      <SourceContent page={{ ...source, html: repairContentHtml(source.html) }} turnstileSiteKey={readTurnstileSiteKey()} />
+      {path === "/datenschutzerklarung/" && <CookiePolicy />}
+    </>
+  );
   if (path === "/kontakt/") return <ContactPage />;
   if (path === "/impressum/") return <LegalPage />;
   if (path === "/datenschutzerklarung/") return <LegalPage privacy />;

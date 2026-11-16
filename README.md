@@ -21,7 +21,7 @@ Node.js 20 or newer is recommended. Deploy to Vercel or any Node-compatible host
 ## Content and routes
 
 - Typed page, post, archive, navigation, and location records: `src/data/site.ts`
-- Verbatim imported main content for 78 rendered URLs: `src/data/source-content.json`
+- Verbatim imported main content for 78 rendered URLs: `src/data/pages/`
 - Local first-party images: `public/media/`
 - Imported page media (443 source references): `public/media/imported/`
 - Shared visual shell: `src/components/`

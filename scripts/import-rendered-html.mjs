@@ -10,7 +10,8 @@ if (!sourceDirectory) {
 
 const projectRoot = new URL("../", import.meta.url).pathname;
 const mediaDirectory = join(projectRoot, "public/media/imported");
-const outputPath = join(projectRoot, "src/data/source-content.json");
+const pagesDirectory = join(projectRoot, "src/data/pages");
+const indexPath = join(projectRoot, "src/data/pages-index.ts");
 const auditPath = join(projectRoot, "docs/content-audit.json");
 const checklistPath = join(projectRoot, "docs/page-checklist.md");
 await rm(mediaDirectory, { recursive: true, force: true });
@@ -19,6 +20,27 @@ await mkdir(mediaDirectory, { recursive: true });
 const files = (await readdir(sourceDirectory)).filter(file => file.endsWith(".html")).sort();
 const pages = [];
 const media = new Map();
+
+function fileForRoute(route) {
+  if (route === "/") return "home.json";
+  return `${route.replace(/^\/|\/$/g, "").replaceAll("/", "__")}.json`;
+}
+
+function sanitizeImportedHtml(html) {
+  const $ = cheerio.load(html, null, false);
+  const urlAttributes = new Set(["href", "src", "action", "xlink:href", "formaction"]);
+  $("script, iframe, object, embed, base").remove();
+  $("*").each((_, element) => {
+    if (!element.attribs) return;
+    const node = $(element);
+    for (const name of Object.keys(element.attribs)) {
+      if (/^on/i.test(name)) node.removeAttr(name);
+      const value = element.attribs[name] || "";
+      if (urlAttributes.has(name.toLowerCase()) && /^\s*javascript:/i.test(value)) node.attr(name, "#");
+    }
+  });
+  return $.html();
+}
 
 function routeFromFilename(filename) {
   const stem = filename.replace(/\.html$/, "");
@@ -149,9 +171,11 @@ for (const page of pages) {
       $(element).attr("srcset", "").removeAttr("data-src").removeAttr("data-lazy-src");
     }
   });
-  page.html = $.html();
+  page.html = sanitizeImportedHtml($.html());
 }
 
+await rm(pagesDirectory, { recursive: true, force: true });
+await mkdir(pagesDirectory, { recursive: true });
 const contentOutput = pages.map(page => ({
   route: page.route,
   title: page.title,
@@ -160,7 +184,18 @@ const contentOutput = pages.map(page => ({
   text: page.text,
   sourceFile: page.sourceFile,
 }));
-await writeFile(outputPath, `${JSON.stringify(contentOutput, null, 2)}\n`);
+const indexLines = [];
+for (const page of contentOutput) {
+  const file = fileForRoute(page.route);
+  await writeFile(join(pagesDirectory, file), `${JSON.stringify(page, null, 2)}\n`);
+  indexLines.push({ id: file.replace(/\.json$/, "").replace(/[^a-zA-Z0-9_]/g, "_"), file });
+}
+await writeFile(indexPath, `${indexLines.map(item => `import ${item.id} from "./pages/${item.file}";`).join("\n")}
+
+export const sourcePages = [
+${indexLines.map(item => `  ${item.id},`).join("\n")}
+];
+`);
 
 const audit = pages.map(page => ({
   route: page.route,

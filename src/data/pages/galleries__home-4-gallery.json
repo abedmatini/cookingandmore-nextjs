@@ -1,0 +1,8 @@
+{
+  "route": "/galleries/home-4-gallery/",
+  "title": "Home 4 Gallery",
+  "description": "",
+  "html": "<div class=\"source-gallery\"><h1>Home 4 Gallery</h1><p>Die Original-Galerie wird im WordPress-HTML ausschließlich durch ein serverseitiges Supersized-Skript referenziert.</p></div>",
+  "text": "Home 4 GalleryDie Original-Galerie wird im WordPress-HTML ausschließlich durch ein serverseitiges Supersized-Skript referenziert.",
+  "sourceFile": "galleries__home-4-gallery.html"
+}
